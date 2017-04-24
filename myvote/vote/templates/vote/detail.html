@@ -1,1 +1,13 @@
-{{ question }}
+<h2> {{ question }} </h2>
+{% if error_message %} <p><strong>{{ error_message }} </strong></p>
+{% endif %}
+
+<form action="{% url 'vote:vote' question.id %}" method="POST">
+  {% csrf_token %}
+  {% for choice in question.choice_set.all%}
+    <input type="radio" name="choice" id="choice{{ forloop.count }}" value="{{ choice.id }}" />
+    <!-- name = post의 dictionary처럼 쓸 수 있음 -->
+    <label ofr="choice{{forloop.counter}}"> {{choice.choice_text}} </label><br>
+  {% endfor %}
+    <input type="submit" value="투표하기">
+</form>
