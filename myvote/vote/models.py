@@ -10,8 +10,10 @@ class Question(models.Model):
         return self.question_text
 
     def was_published_recently(self):
+        now = timezone.now()
         #날짜가 최신일때만 true return
-        return self.pub_date >= timezone.now() - datetime.timedelta(days = 1)
+        #return self.pub_date >= timezone.now() - datetime.timedelta(days = 1)
+        return now - datetime.timedelta(days = 1) <= self.pub_date <= now
                                 #오늘          -  하루
 
 class Choice(models.Model):
